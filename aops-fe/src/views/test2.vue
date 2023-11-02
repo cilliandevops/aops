@@ -16,8 +16,8 @@
         <el-table-column prop="avatar" label="头像"></el-table-column>
         <el-table-column label="操作">
           <template v-slot="{ row }">
-            <el-button @click="editUser(row)">编辑</el-button>
-            <el-button @click="deleteUser(row)">删除</el-button>
+            <el-button @click="editUser(row)" type="primary">编辑</el-button>
+            <el-button @click="deleteUser(row.id)"  type="danger">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -30,7 +30,7 @@
       >
         <el-form v-model="form">
           <el-form-item label="用户名">
-            <el-input v-model="form.username"></el-input>
+            <el-input v-model="form.username" placeholder="用户名"></el-input>
           </el-form-item>
           <el-form-item label="密码">
             <el-input type="password" v-model="form.password"></el-input>
@@ -107,6 +107,11 @@ const saveUser = async () => {
   }
   dialogVisible.value = false;
   await fetchUsers();
+};
+
+const editUser = (user) => {
+  form.value = { ...user };
+  dialogVisible.value = true;
 };
 
 const deleteUser = async (user) => {
